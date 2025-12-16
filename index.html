@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dominic Sandoval — Portfolio</title>
+  <style>
+    :root{--accent:#0066ff;--bg:#f8fafc}
+    body{font-family:Inter,Segoe UI,Arial,sans-serif;margin:0;background:var(--bg);color:#111}
+    .container{max-width:900px;margin:0 auto;padding:2rem}
+    header{background:#fff;border-bottom:1px solid #e6e9ef}
+    .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
+    .brand{font-weight:700;font-size:1.15rem}
+    nav a{margin-left:1rem;color:#333;text-decoration:none}
+    .hero{display:flex;align-items:center;gap:2rem;padding:3rem 0}
+    .hero h1{font-size:2rem;margin:0}
+    .btn{display:inline-block;background:var(--accent);color:#fff;padding:.5rem .8rem;border-radius:6px;text-decoration:none}
+    .section{background:#fff;border-radius:8px;padding:1.25rem;margin-top:1.25rem}
+    .skills-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem}
+    .skill{background:#f1f5f9;padding:.6rem;border-radius:6px}
+    footer{text-align:center;padding:1rem;margin-top:2rem;color:#666}
+    @media(max-width:600px){.hero{flex-direction:column;align-items:flex-start}.header-inner{flex-direction:column;align-items:flex-start}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <div class="brand">Dominic Sandoval</div>
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="home" class="hero">
+      <div>
+        <h1>Welcome — I'm Dominic Sandoval</h1>
+        <p>Data Scientist focused on turning data into actionable insights and products.</p>
+        <p><a class="btn" href="#contact">Get in touch</a></p>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About Me</h2>
+      <p>Short bio: I specialize in data analysis, machine learning, and building reproducible data products. I enjoy solving real-world problems with data.</p>
+    </section>
+
+    <section id="skills" class="section">
+      <h2>Skills</h2>
+      <p>Data science skills:</p>
+      <div class="skills-list">
+        <div class="skill"><strong>Python</strong><br>pandas, NumPy, scikit-learn</div>
+        <div class="skill"><strong>Machine Learning</strong><br>Supervised/Unsupervised, model evaluation</div>
+        <div class="skill"><strong>Deep Learning</strong><br>TensorFlow, PyTorch</div>
+        <div class="skill"><strong>Statistics</strong><br>Hypothesis testing, experimental design</div>
+        <div class="skill"><strong>Data Visualization</strong><br>Matplotlib, Seaborn, Plotly</div>
+        <div class="skill"><strong>SQL & Databases</strong><br>Postgres, MySQL</div>
+        <div class="skill"><strong>NLP</strong><br>Transformers, text preprocessing</div>
+        <div class="skill"><strong>Big Data & Tools</strong><br>Spark, Airflow, Docker, Git</div>
+      </div>
+    </section>
+
+    <section id="resume" class="section">
+      <h2>Resume</h2>
+
+      <h3>Contact</h3>
+      <p>Dominic Sandoval<br>
+      3431 41st St, Highland, IN 46322<br>
+      Phone: <a href="tel:+15108160573">510.816.0573</a><br>
+      Email: <a href="mailto:dmsandoval25@gmail.com">dmsandoval25@gmail.com</a></p>
+
+      <h3>Work Experience</h3>
+
+      <h4>Non-profit ICC — Chicago, IL (Dec 2020–Current)</h4>
+      <p><em>Overseeing Minister / Marketing Coordinator</em></p>
+      <ul>
+        <li>Directed and executed B2B marketing campaigns for annual fundraisers, raffles, and special events, significantly boosting engagement and participation.</li>
+        <li>Spearheaded B2C physical and digital campus ministry campaigns across the US, doubling group size through strategic marketing and outreach efforts.</li>
+        <li>Gathered analytical data to provide weekly training and mentoring on effective marketing strategies, event planning, and ministry growth.</li>
+        <li>Developed strong communication and problem-solving skills, ensuring high levels of recruitment and recruitment training.</li>
+        <li>Maintained personal accountability and a high level of integrity in all marketing activities.</li>
+      </ul>
+
+      <h4>Non-profit ICC — Los Angeles, CA (Feb 2015–2020)</h4>
+      <p><em>Senior Youth Minister / Marketing Coordinator</em></p>
+      <ul>
+        <li>Managed and implemented B2C marketing campaigns for weekly events and ministry activities.</li>
+        <li>Demonstrated leadership in planning and executing successful events, enhancing community engagement and ran B2B bi-annual fundraisers.</li>
+        <li>Gathered analytical data to provide precise training on marketing techniques and recruitment strategies, contributing to the growth of the ministry.</li>
+        <li>Ensured effective communication and problem-solving, maintaining high standards of integrity and accountability.</li>
+      </ul>
+
+      <h4>Ovation Medical — Agoura Hills, CA (Apr 2018–June 2018)</h4>
+      <p><em>National Account Executive</em></p>
+      <ul>
+        <li>Established and managed new accounts, forming a robust client base through assertive efforts.</li>
+        <li>Provided exceptional customer service and maintained outbound communication, driving customer satisfaction and loyalty.</li>
+        <li>Held accountable for call metrics, demonstrating discipline and diligence in achieving quotas.</li>
+      </ul>
+
+      <h4>Lehmer's Buick GMC — Concord, CA (Sept 2012–2014)</h4>
+      <p><em>Sales Representative</em></p>
+      <ul>
+        <li>Delivered outstanding customer service, assisting customers in purchasing their dream cars through effective marketing and sales strategies.</li>
+        <li>Developed strong relationships with customers, enhancing brand loyalty and satisfaction.</li>
+      </ul>
+
+      <h3>Education</h3>
+      <ul>
+        <li><strong>Purdue University Northwest</strong> — Bachelor of Science in Computer Science, Hammond, IN (Sept 2024–Current)</li>
+        <li><strong>International College of Christian Ministries</strong> — Bachelor of Arts in Ministry Leadership, Los Angeles, CA (Sept 2016–Aug 2018)</li>
+      </ul>
+
+      <h3>Achievements</h3>
+      <ul>
+        <li>Fastest growing church in the US — 2021</li>
+        <li>Salesman of the month — September 2013 & 2014</li>
+        <li>Vice President of club Phi Beta Lambda — 2010</li>
+      </ul>
+
+      <h3>References</h3>
+      <ul>
+        <li>John Causey — 310-849-5362 — john.causey@usd21.org</li>
+        <li>Joel Parlour — 206-393-7709 — joel.parlour@usd21.org</li>
+        <li>RD Baker — 310-894-1765 — rd.baker@uds21.org</li>
+      </ul>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <p>Address: 3431 41st St, Highland, IN 46322<br>
+      Phone: <a href="tel:+15108160573">510.816.0573</a><br>
+      Email: <a href="mailto:dmsandoval25@gmail.com">dmsandoval25@gmail.com</a></p>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">© 2025 Dominic Sandoval</div>
+  </footer>
+</body>
+</html>
