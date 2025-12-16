@@ -5,20 +5,68 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dominic Sandoval — Portfolio</title>
   <style>
-    :root{--accent:#0066ff;--bg:#f8fafc}
-    body{font-family:Inter,Segoe UI,Arial,sans-serif;margin:0;background:var(--bg);color:#111}
-    .container{max-width:900px;margin:0 auto;padding:2rem}
-    header{background:#fff;border-bottom:1px solid #e6e9ef}
+    /* Background: place your chosen Chicago skyline image at images/chicago-skyline-night.jpg
+       Tip: download a free, high-resolution night skyline from Unsplash (https://unsplash.com/s/photos/chicago-skyline-night)
+    */
+    :root{--accent:#0066ff;--bg:#0b1220}
+
+    /* Page base */
+    body{
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      margin:0;
+      min-height:100vh;
+      position:relative;
+      color:#111;
+      background:var(--bg);
+      overflow-x:hidden;
+    }
+
+    /* Blurred fixed background image */
+    body::before{
+      content:"";
+      position:fixed;
+      inset:0;
+      background-image: url('images/chicago-skyline-night.jpg');
+      background-size:cover;
+      background-position:center center;
+      background-repeat:no-repeat;
+      filter: blur(10px) brightness(0.45) saturate(1.05);
+      transform: scale(1.05);
+      z-index:-2;
+      will-change: transform, filter;
+    }
+
+    /* Soft overlay to improve contrast */
+    body::after{
+      content:"";
+      position:fixed;
+      inset:0;
+      background: linear-gradient(rgba(6,10,18,0.45), rgba(6,10,18,0.55));
+      z-index:-1;
+    }
+
+    /* Content stack above background */
+    .container{max-width:900px;margin:0 auto;padding:2rem;position:relative;z-index:2}
+
+    /* Header: translucent with slight blur */
+    header{background:rgba(255,255,255,0.85);border-bottom:1px solid rgba(230,233,239,0.7);backdrop-filter: blur(4px);position:relative;z-index:3}
     .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
     .brand{font-weight:700;font-size:1.15rem}
-    nav a{margin-left:1rem;color:#333;text-decoration:none}
-    .hero{display:flex;align-items:center;gap:2rem;padding:3rem 0}
+    nav a{margin-left:1rem;color:#0b1220;text-decoration:none}
+
+    /* Hero: make text visible on darkened photo */
+    .hero{display:flex;align-items:center;gap:2rem;padding:3rem 0;color:#fff;text-shadow:0 6px 22px rgba(2,6,12,0.6)}
     .hero h1{font-size:2rem;margin:0}
-    .btn{display:inline-block;background:var(--accent);color:#fff;padding:.5rem .8rem;border-radius:6px;text-decoration:none}
-    .section{background:#fff;border-radius:8px;padding:1.25rem;margin-top:1.25rem}
+    .btn{display:inline-block;background:var(--accent);color:#fff;padding:.5rem .8rem;border-radius:6px;text-decoration:none;box-shadow:0 6px 18px rgba(0,102,255,0.18)}
+
+    /* Sections: slightly translucent cards */
+    .section{background:rgba(255,255,255,0.92);border-radius:8px;padding:1.25rem;margin-top:1.25rem;box-shadow:0 8px 30px rgba(2,6,23,0.06)}
+
     .skills-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.6rem}
     .skill{background:#f1f5f9;padding:.6rem;border-radius:6px}
+
     footer{text-align:center;padding:1rem;margin-top:2rem;color:#666}
+
     @media(max-width:600px){.hero{flex-direction:column;align-items:flex-start}.header-inner{flex-direction:column;align-items:flex-start}}
   </style>
 </head>
