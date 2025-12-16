@@ -60,6 +60,27 @@
     .brand{font-weight:700;font-size:1.15rem}
     nav a{margin-left:1rem;color:#0b1220;text-decoration:none}
 
+    /* Hamburger / menu panel */
+    .hamburger{
+      background:transparent;border:none;padding:6px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#0b1220;border-radius:8px
+    }
+    .hamburger:focus{outline:2px solid rgba(0,102,255,0.12);outline-offset:2px}
+    .menu-panel{position:absolute;top:calc(100% + 8px);right:16px;background:rgba(255,255,255,0.97);border-radius:8px;padding:.35rem;box-shadow:0 10px 30px rgba(2,6,23,0.12);display:none;min-width:170px;z-index:50}
+    .menu-panel a{display:block;padding:.5rem .75rem;color:#0b1220;text-decoration:none;border-radius:6px}
+    .menu-panel a:hover,.menu-panel a:focus{background:rgba(6,10,18,0.03)}
+    .header-open .menu-panel, .menu-panel[aria-hidden="false"]{display:block}
+
+    @media(min-width:900px){
+      /* Optional: increase menu spacing on larger screens */
+      .menu-panel{right:24px}
+    }
+
+    @media(max-width:600px){
+      /* Keep the hamburger visible on small screens */
+      .hamburger{width:40px;height:40px}
+      .menu-panel{right:12px}
+    }
+
     /* Hero: make text visible on darkened photo */
     .hero{display:flex;align-items:center;gap:2rem;padding:3rem 0;color:#fff;text-shadow:0 6px 22px rgba(2,6,12,0.6)}
     .hero h1{font-size:2rem;margin:0}
@@ -121,12 +142,18 @@
   <header>
     <div class="container header-inner">
       <div class="brand">D.S.</div>
-      <nav>
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#skills">Skills</a>
-        <a href="#resume">Resume</a>
-        <a href="#contact">Contact</a>
+      <nav class="site-nav" aria-label="Main navigation">
+        <button class="hamburger" aria-expanded="false" aria-controls="main-menu" aria-label="Open navigation menu">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+        </button>
+
+        <div id="main-menu" class="menu-panel" role="menu" aria-hidden="true">
+          <a role="menuitem" href="#home">Home</a>
+          <a role="menuitem" href="#about">About</a>
+          <a role="menuitem" href="#skills">Skills</a>
+          <a role="menuitem" href="#resume">Resume</a>
+          <a role="menuitem" href="#contact">Contact</a>
+        </div>
       </nav>
     </div>
   </header>
@@ -302,6 +329,30 @@
         if(window.innerWidth <= 600){ btn.style.right = '16px'; btn.style.bottom = '16px'; }
         else { btn.style.right = '24px'; btn.style.bottom = '24px'; }
       }, {passive:true});
+    })();
+
+    // Hamburger menu behavior: toggle panel, close on outside click/Escape, close after selection
+    (function(){
+      var btn = document.querySelector('.hamburger');
+      var menu = document.getElementById('main-menu');
+      if(!btn || !menu) return;
+
+      function setOpen(open){
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+        document.documentElement.classList.toggle('header-open', open);
+      }
+
+      btn.addEventListener('click', function(e){ e.stopPropagation(); var isOpen = btn.getAttribute('aria-expanded') === 'true'; setOpen(!isOpen); if(!isOpen){ var first = menu.querySelector('a'); if(first) first.focus(); }});
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function(e){ if(!menu.contains(e.target) && !btn.contains(e.target)){ setOpen(false); }});
+
+      // Close on Escape
+      window.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ setOpen(false); btn.focus(); }});
+
+      // Close when a menu link is clicked (allow anchor behavior to proceed)
+      menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); });
     })();
   })();
   </script>
