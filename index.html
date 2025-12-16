@@ -13,6 +13,7 @@
     :root{--accent:#0066ff;--bg:#0b1220}
 
     /* Page base */
+    html{scroll-behavior:smooth}
     body{
       font-family:Inter,Segoe UI,Arial,sans-serif;
       margin:0;
@@ -354,6 +355,31 @@
       // Close when a menu link is clicked (allow anchor behavior to proceed)
       menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); });
     })();
+
+    // Smooth scroll for in-page anchors (delegated)
+    (function(){
+      document.addEventListener('click', function(e){
+        var a = e.target.closest && e.target.closest('a');
+        if(!a) return;
+        var href = a.getAttribute('href');
+        if(!href || href.charAt(0) !== '#') return;
+        var id = href.slice(1);
+        var target = id ? document.getElementById(id) : document.documentElement;
+        if(!target) return; // let default behavior occur if no target
+        e.preventDefault();
+        target.scrollIntoView({behavior:'smooth', block:'start'});
+        try{ history.pushState(null,'', href); }catch(_e){}
+        if(!target.hasAttribute('tabindex')) target.setAttribute('tabindex','-1');
+        try{ target.focus({preventScroll:true}); }catch(_e){}
+      }, {passive:false});
+
+      // On load with hash, perform a smooth scroll to the target (deferred)
+      if(window.location.hash){
+        var t = document.getElementById(window.location.hash.slice(1));
+        if(t){ setTimeout(function(){ t.scrollIntoView({behavior:'smooth', block:'start'}); if(!t.hasAttribute('tabindex')) t.setAttribute('tabindex','-1'); try{ t.focus({preventScroll:true}); }catch(_e){} }, 60); }
+      }
+    })();
+
   })();
   </script>
 </body>
