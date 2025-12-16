@@ -58,8 +58,23 @@
     /* Header: translucent with slight blur */
     header{background:rgba(255,255,255,0.85);border-bottom:1px solid rgba(230,233,239,0.7);backdrop-filter: blur(4px);position:relative;z-index:3}
     .header-inner{display:flex;justify-content:space-between;align-items:center;padding:1rem 0}
-    .brand{font-weight:700;font-size:1.15rem}
+    /* Brand: full name */
+    .brand{font-weight:700;font-size:1.05rem}
+    .brand-link{color:#0b1220;text-decoration:none;font-weight:700}
+    .brand-link:focus{outline:2px solid rgba(0,102,255,0.12);outline-offset:3px;border-radius:6px}
+
     nav a{margin-left:1rem;color:#0b1220;text-decoration:none}
+
+    /* Monochrome logo for print/PDF */
+    @media print{
+      /* Try to preserve colors when printing/PDF exporting */
+      .brand-link{color:#000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact}
+      /* Ensure header and body print cleanly */
+      header{background:#fff !important; color:#000 !important}
+      body{background:#fff !important}
+      /* Hide UI elements that don't make sense on print */
+      .floating-arrow, .hamburger, .menu-panel{display:none !important}
+    }
 
     /* Hamburger / menu panel */
     .hamburger{
@@ -142,7 +157,9 @@
 <body>
   <header>
     <div class="container header-inner">
-      <div class="brand">D.S.</div>
+      <div class="brand">
+        <a href="#home" class="brand-link" aria-label="Dominic Sandoval — Home" title="Home">Dominic Sandoval</a>
+      </div> 
       <nav class="site-nav" aria-label="Main navigation">
         <button class="hamburger" aria-expanded="false" aria-controls="main-menu" aria-label="Open navigation menu">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
