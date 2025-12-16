@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dominic Sandoval — Portfolio</title>
+  <link rel="preload" as="image" href="images/chicago-skyline-night.webp" type="image/webp">
+  <link rel="preload" as="image" href="images/chicago-skyline-night.jpg" type="image/jpeg">
   <style>
     /* Background: place your chosen Chicago skyline image at images/chicago-skyline-night.jpg
        Tip: download a free, high-resolution night skyline from Unsplash (https://unsplash.com/s/photos/chicago-skyline-night)
@@ -26,7 +28,8 @@
       content:"";
       position:fixed;
       inset:0;
-      background-image: url('images/chicago-skyline-night.jpg');
+      /* Prefer WebP, fall back to JPEG */
+      background-image: url('images/chicago-skyline-night.webp'), url('images/chicago-skyline-night.jpg');
       background-size:cover;
       background-position:center center;
       background-repeat:no-repeat;
@@ -68,6 +71,14 @@
     footer{text-align:center;padding:1rem;margin-top:2rem;color:#666}
 
     @media(max-width:600px){.hero{flex-direction:column;align-items:flex-start}.header-inner{flex-direction:column;align-items:flex-start}}
+
+    /* Fallback class if background images fail to load */
+    body.bg-fallback::before{
+      background-image: none !important;
+      background: linear-gradient(135deg, #071226 0%, #0d2336 100%);
+      filter: none !important;
+      transform: none !important;
+    }
   </style>
 </head>
 <body>
@@ -190,5 +201,26 @@
   <footer>
     <div class="container">© 2025 Dominic Sandoval</div>
   </footer>
+
+  <script>
+  (function(){
+    function tryLoad(url, cb) {
+      var img = new Image();
+      img.onload = function(){ cb(true); };
+      img.onerror = function(){ cb(false); };
+      img.src = url;
+    }
+
+    // Try WebP first, then JPG, then show gradient fallback
+    tryLoad('images/chicago-skyline-night.webp', function(ok){
+      if(ok){ document.body.classList.remove('bg-fallback'); document.body.dataset.bg='webp'; return; }
+      tryLoad('images/chicago-skyline-night.jpg', function(ok2){
+        if(ok2){ document.body.classList.remove('bg-fallback'); document.body.dataset.bg='jpg'; return; }
+        document.body.classList.add('bg-fallback');
+        console.warn('Background image failed to load; using gradient fallback.');
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
