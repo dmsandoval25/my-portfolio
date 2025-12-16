@@ -75,13 +75,15 @@
 
     @media(max-width:600px){.hero{flex-direction:column;align-items:flex-start}.header-inner{flex-direction:column;align-items:flex-start}}
 
-    /* Floating follow-arrow (follows cursor and scrolls to top) */
+    /* Floating arrow: fixed bottom-right button (click to scroll to top) */
     .floating-arrow{
       position: fixed;
-      left: 50%;
-      top: 50%;
-      width:48px;
-      height:48px;
+      right: 24px;
+      bottom: 24px;
+      left: auto;
+      top: auto;
+      width:44px;
+      height:44px;
       background: rgba(255,255,255,0.08);
       color:#fff;
       border-radius:50%;
@@ -92,17 +94,19 @@
       border: 1px solid rgba(255,255,255,0.06);
       backdrop-filter: blur(4px);
       opacity: 0.6;
-      transform: translate(-50%,-50%) scale(0.9);
+      transform: none;
       transition: opacity .18s ease, transform .18s cubic-bezier(.2,.8,.2,1);
       z-index: 200;
       pointer-events: auto;
       cursor: pointer;
-      will-change: left, top, transform, opacity;
     }
     .floating-arrow svg{width:18px;height:18px;fill:currentColor}
-    .floating-arrow:hover{opacity:0.95;transform: translate(-50%,-50%) scale(1.05)}
+    .floating-arrow:hover{opacity:0.95;transform: scale(1.05)}
     .floating-arrow.hidden{display:none}
-    @media(max-width:600px){.floating-arrow{display:none}}
+    @media(max-width:600px){
+      .floating-arrow{right:16px;bottom:16px;width:40px;height:40px;opacity:0.75}
+      .floating-arrow svg{width:16px;height:16px}
+    }
 
     /* Fallback class if background images fail to load */
     body.bg-fallback::before{
@@ -259,49 +263,17 @@
       });
     });
 
-    // Floating arrow behavior: follows cursor (with slight offset), fades when inactive, click to scroll to top
+    // Floating arrow behavior: fixed bottom-right button, click to scroll to top
     (function(){
       var btn = document.querySelector('.floating-arrow');
       if(!btn) return;
-      var target = {x: window.innerWidth - 80, y: window.innerHeight - 80};
-      var current = {x: target.x, y: target.y};
-      var idleTimer = null;
 
-      function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
-
-      function showTemporary(){
-        btn.style.display = 'flex';
-        btn.style.opacity = '0.6';
-        if(idleTimer) clearTimeout(idleTimer);
-        idleTimer = setTimeout(function(){ btn.style.opacity = '0.35'; }, 1800);
-      }
-
-      function onMove(e){
-        var x = e.clientX, y = e.clientY;
-        target.x = clamp(x + 36, 28, window.innerWidth - 28);
-        target.y = clamp(y + 36, 28, window.innerHeight - 28);
-        showTemporary();
-      }
-      function onTouchMove(e){
-        var t = e.touches && e.touches[0];
-        if(!t) return;
-        target.x = clamp(t.clientX + 36, 28, window.innerWidth - 28);
-        target.y = clamp(t.clientY + 36, 28, window.innerHeight - 28);
-        showTemporary();
-      }
-
-      window.addEventListener('mousemove', onMove, {passive:true});
-      window.addEventListener('touchmove', onTouchMove, {passive:true});
-
-      // Smoothly animate towards target
-      function raf(){
-        current.x += (target.x - current.x) * 0.18;
-        current.y += (target.y - current.y) * 0.18;
-        btn.style.left = current.x + 'px';
-        btn.style.top = current.y + 'px';
-        requestAnimationFrame(raf);
-      }
-      raf();
+      // Ensure fixed positioning (CSS should handle it) and show
+      btn.style.left = 'auto';
+      btn.style.top = 'auto';
+      btn.style.right = '24px';
+      btn.style.bottom = '24px';
+      btn.style.display = 'flex';
 
       // Click / keyboard to scroll to top
       btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
@@ -309,16 +281,27 @@
         if(e.key === 'Enter' || e.key === ' ' ) { e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); }
       });
 
+      // Slightly reduce opacity when at top to be less intrusive
+      function updateOpacity(){
+        if(window.scrollY < 60){ btn.style.opacity = '0.35'; }
+        else { btn.style.opacity = '0.6'; }
+      }
+      window.addEventListener('scroll', updateOpacity, {passive:true});
+      updateOpacity();
+
       // Reduce opacity when focusing form elements to avoid occlusion
       document.addEventListener('focusin', function(e){
         if(['INPUT','TEXTAREA','SELECT'].indexOf((e.target && e.target.tagName)||'') !== -1){
           btn.style.opacity = '0.15';
         }
       });
-      document.addEventListener('focusout', function(){ btn.style.opacity = '0.6'; });
+      document.addEventListener('focusout', updateOpacity);
 
-      // Reposition on resize
-      window.addEventListener('resize', function(){ target.x = clamp(target.x, 28, window.innerWidth - 28); target.y = clamp(target.y, 28, window.innerHeight - 28); }, {passive:true});
+      // Keep position responsive on resize
+      window.addEventListener('resize', function(){
+        if(window.innerWidth <= 600){ btn.style.right = '16px'; btn.style.bottom = '16px'; }
+        else { btn.style.right = '24px'; btn.style.bottom = '24px'; }
+      }, {passive:true});
     })();
   })();
   </script>
