@@ -75,6 +75,35 @@
 
     @media(max-width:600px){.hero{flex-direction:column;align-items:flex-start}.header-inner{flex-direction:column;align-items:flex-start}}
 
+    /* Floating follow-arrow (follows cursor and scrolls to top) */
+    .floating-arrow{
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width:48px;
+      height:48px;
+      background: rgba(255,255,255,0.08);
+      color:#fff;
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 8px 20px rgba(2,6,23,0.2);
+      border: 1px solid rgba(255,255,255,0.06);
+      backdrop-filter: blur(4px);
+      opacity: 0.6;
+      transform: translate(-50%,-50%) scale(0.9);
+      transition: opacity .18s ease, transform .18s cubic-bezier(.2,.8,.2,1);
+      z-index: 200;
+      pointer-events: auto;
+      cursor: pointer;
+      will-change: left, top, transform, opacity;
+    }
+    .floating-arrow svg{width:18px;height:18px;fill:currentColor}
+    .floating-arrow:hover{opacity:0.95;transform: translate(-50%,-50%) scale(1.05)}
+    .floating-arrow.hidden{display:none}
+    @media(max-width:600px){.floating-arrow{display:none}}
+
     /* Fallback class if background images fail to load */
     body.bg-fallback::before{
       background-image: none !important;
@@ -205,6 +234,11 @@
     <div class="container">© 2025 Dominic Sandoval</div>
   </footer>
 
+  <!-- Floating cursor-following arrow (click to scroll to top) -->
+  <button class="floating-arrow" aria-label="Scroll to top" title="Back to top" tabindex="0">
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+  </button>
+
   <script>
   (function(){
     function tryLoad(url, cb) {
@@ -224,6 +258,68 @@
         console.warn('Background image failed to load; using gradient fallback.');
       });
     });
+
+    // Floating arrow behavior: follows cursor (with slight offset), fades when inactive, click to scroll to top
+    (function(){
+      var btn = document.querySelector('.floating-arrow');
+      if(!btn) return;
+      var target = {x: window.innerWidth - 80, y: window.innerHeight - 80};
+      var current = {x: target.x, y: target.y};
+      var idleTimer = null;
+
+      function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+      function showTemporary(){
+        btn.style.display = 'flex';
+        btn.style.opacity = '0.6';
+        if(idleTimer) clearTimeout(idleTimer);
+        idleTimer = setTimeout(function(){ btn.style.opacity = '0.35'; }, 1800);
+      }
+
+      function onMove(e){
+        var x = e.clientX, y = e.clientY;
+        target.x = clamp(x + 36, 28, window.innerWidth - 28);
+        target.y = clamp(y + 36, 28, window.innerHeight - 28);
+        showTemporary();
+      }
+      function onTouchMove(e){
+        var t = e.touches && e.touches[0];
+        if(!t) return;
+        target.x = clamp(t.clientX + 36, 28, window.innerWidth - 28);
+        target.y = clamp(t.clientY + 36, 28, window.innerHeight - 28);
+        showTemporary();
+      }
+
+      window.addEventListener('mousemove', onMove, {passive:true});
+      window.addEventListener('touchmove', onTouchMove, {passive:true});
+
+      // Smoothly animate towards target
+      function raf(){
+        current.x += (target.x - current.x) * 0.18;
+        current.y += (target.y - current.y) * 0.18;
+        btn.style.left = current.x + 'px';
+        btn.style.top = current.y + 'px';
+        requestAnimationFrame(raf);
+      }
+      raf();
+
+      // Click / keyboard to scroll to top
+      btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+      btn.addEventListener('keydown', function(e){
+        if(e.key === 'Enter' || e.key === ' ' ) { e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); }
+      });
+
+      // Reduce opacity when focusing form elements to avoid occlusion
+      document.addEventListener('focusin', function(e){
+        if(['INPUT','TEXTAREA','SELECT'].indexOf((e.target && e.target.tagName)||'') !== -1){
+          btn.style.opacity = '0.15';
+        }
+      });
+      document.addEventListener('focusout', function(){ btn.style.opacity = '0.6'; });
+
+      // Reposition on resize
+      window.addEventListener('resize', function(){ target.x = clamp(target.x, 28, window.innerWidth - 28); target.y = clamp(target.y, 28, window.innerHeight - 28); }, {passive:true});
+    })();
   })();
   </script>
 </body>
