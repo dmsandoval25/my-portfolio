@@ -4,9 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Dominic Sandoval — Portfolio</title>
+  <link rel="preload" as="image" href="images/chicago-skyline-night.webp" type="image/webp">
   <link rel="preload" as="image" href="images/chicago-skyline-night.jpg" type="image/jpeg">
   <style>
-    /* Background: place your chosen Chicago skyline image at images/chicago-skyline-night.jpg
+    /* Background: place your chosen Chicago skyline image at images/chicago-skyline-night.jpg (WebP available at images/chicago-skyline-night.webp)
        Tip: download a free, high-resolution night skyline from Unsplash (https://unsplash.com/s/photos/chicago-skyline-night)
     */
     :root{--accent:#0066ff;--bg:#0b1220}
@@ -27,8 +28,11 @@
       content:"";
       position:fixed;
       inset:0;
-      /* Use JPEG directly to avoid broken WebP files */
-      background-image: url('images/chicago-skyline-night.jpg');
+      /* Prefer WebP with JPEG fallback for broader support */
+      background-image: url('images/chicago-skyline-night.webp');
+      /* Fallbacks / broader support */
+      background-image: -webkit-image-set(url('images/chicago-skyline-night.webp') 1x, url('images/chicago-skyline-night.jpg') 1x);
+      background-image: image-set(url('images/chicago-skyline-night.webp') type('image/webp') 1x, url('images/chicago-skyline-night.jpg') type('image/jpeg') 1x);
       background-size:cover;
       background-position:center center;
       background-repeat:no-repeat;
@@ -210,11 +214,15 @@
       img.src = url;
     }
 
-    // Try JPG first, then show gradient fallback
-    tryLoad('images/chicago-skyline-night.jpg', function(ok){
-      if(ok){ document.body.classList.remove('bg-fallback'); document.body.dataset.bg='jpg'; return; }
-      document.body.classList.add('bg-fallback');
-      console.warn('Background image failed to load; using gradient fallback.');
+    // Try WebP first, then JPG, then show gradient fallback
+    tryLoad('images/chicago-skyline-night.webp', function(ok){
+      if(ok){ document.body.classList.remove('bg-fallback'); document.body.dataset.bg='webp'; return; }
+      // WebP failed — try JPG
+      tryLoad('images/chicago-skyline-night.jpg', function(ok2){
+        if(ok2){ document.body.classList.remove('bg-fallback'); document.body.dataset.bg='jpg'; return; }
+        document.body.classList.add('bg-fallback');
+        console.warn('Background image failed to load; using gradient fallback.');
+      });
     });
   })();
   </script>
