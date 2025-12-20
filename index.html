@@ -108,9 +108,54 @@
     }
 
     /* Hero: make text visible on darkened photo */
-    .hero{display:flex;align-items:center;gap:2rem;padding:3rem 0;color:#fff;text-shadow:0 6px 22px rgba(2,6,12,0.6)}
+    .hero{display:flex;align-items:center;gap:1.75rem;padding:3rem 0;color:#fff;text-shadow:0 6px 22px rgba(2,6,12,0.6)}
+    .hero-avatar-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 120px;
+      width: 120px;
+      min-width: 120px;
+      min-height: 120px;
+    }
+    .hero-avatar-wrap {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 6px 18px rgba(2,6,23,0.3);
+      border: 2px solid rgba(255,255,255,0.06);
+      background: none;
+      padding: 0;
+      position: relative;
+    }
+    .hero-avatar {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .hero-welcome {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
     .hero h1{font-size:2rem;margin:0}
     .btn{display:inline-block;background:var(--accent);color:#fff;padding:.5rem .8rem;border-radius:6px;text-decoration:none;box-shadow:0 6px 18px rgba(0,102,255,0.18)}
+    @media(max-width:600px){
+      .hero-avatar-container {
+        width: 80px;
+        height: 80px;
+        min-width: 80px;
+        min-height: 80px;
+        margin-bottom: .25rem;
+      }
+    }
 
     /* Sections: slightly translucent cards */
     .section{background:rgba(255,255,255,0.92);border-radius:8px;padding:1.25rem;margin-top:1.25rem;box-shadow:0 8px 30px rgba(2,6,23,0.06)}
@@ -173,7 +218,7 @@
     <div class="container header-inner">
       <div class="brand">
         <a href="index.html" class="brand-link" aria-label="Dominic Sandoval — Home" title="Home">Dominic Sandoval</a>
-      </div> 
+      </div>  
       <nav class="site-nav" aria-label="Main navigation">
         <a class="nav-home" href="index.html" aria-label="Home">Home</a>
         <span class="nav-separator" aria-hidden="true"></span>
@@ -193,7 +238,15 @@
 
   <main class="container">
     <section id="home" class="hero">
-      <div>
+      <div class="hero-avatar-container">
+        <span class="hero-avatar-wrap">
+          <picture style="width:100%;height:100%;display:block;">
+            <source srcset="images/profile.webp" type="image/webp">
+            <img src="images/profile.jpg" alt="Dominic Sandoval" class="hero-avatar">
+          </picture>
+        </span>
+      </div>
+      <div class="hero-welcome">
         <h1>Welcome — I'm Dominic Sandoval</h1>
         <p>Data Scientist focused on turning data into actionable insights and products.</p>
         <p><a class="btn" href="contact.html">Get in touch</a></p>
