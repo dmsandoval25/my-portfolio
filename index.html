@@ -109,37 +109,6 @@
 
     /* Hero: make text visible on darkened photo */
     .hero{display:flex;align-items:center;gap:1.75rem;padding:3rem 0;color:#fff;text-shadow:0 6px 22px rgba(2,6,12,0.6)}
-    .hero-avatar-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 120px;
-      width: 120px;
-      min-width: 120px;
-      min-height: 120px;
-    }
-    .hero-avatar-wrap {
-      display: block;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      overflow: hidden;
-      box-shadow: 0 6px 18px rgba(2,6,23,0.3);
-      border: 2px solid rgba(255,255,255,0.06);
-      background: none;
-      padding: 0;
-      position: relative;
-    }
-    .hero-avatar {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 50%;
-      display: block;
-      position: absolute;
-      top: 0;
-      left: 0;
-    }
     .hero-welcome {
       display: flex;
       flex-direction: column;
@@ -238,14 +207,6 @@
 
   <main class="container">
     <section id="home" class="hero">
-      <div class="hero-avatar-container">
-        <span class="hero-avatar-wrap">
-          <picture style="width:100%;height:100%;display:block;">
-            <source srcset="images/profile.webp" type="image/webp">
-            <img src="images/profile.jpg" alt="Dominic Sandoval" class="hero-avatar">
-          </picture>
-        </span>
-      </div>
       <div class="hero-welcome">
         <h1>Welcome — I'm Dominic Sandoval</h1>
         <p>Data Scientist focused on turning data into actionable insights and products.</p>
