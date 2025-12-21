@@ -87,20 +87,6 @@
     .site-nav .nav-home:hover,.site-nav .nav-home:focus{background:rgba(11,18,32,0.03)}
     .site-nav .nav-separator{display:inline-block;width:1px;height:20px;background:rgba(11,18,32,0.06);margin:0 .6rem;vertical-align:middle;border-radius:1px}
 
-    .hamburger{
-      background:transparent;border:none;padding:6px;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#0b1220;border-radius:8px
-    }
-    .hamburger:focus{outline:2px solid rgba(0,102,255,0.12);outline-offset:2px}
-    .menu-panel{position:absolute;top:calc(100% + 8px);right:16px;background:rgba(255,255,255,0.97);border-radius:8px;padding:.35rem;box-shadow:0 10px 30px rgba(2,6,23,0.12);display:none;min-width:170px;z-index:50}
-    .menu-panel a{display:block;padding:.5rem .75rem;color:#0b1220;text-decoration:none;border-radius:6px}
-    .menu-panel a:hover,.menu-panel a:focus{background:rgba(6,10,18,0.03)}
-    .header-open .menu-panel, .menu-panel[aria-hidden="false"]{display:block}
-
-    @media(min-width:900px){
-      /* Optional: increase menu spacing on larger screens */
-      .menu-panel{right:24px}
-    }
-
     @media(max-width:600px){
       /* Keep the hamburger visible on small screens */
       .hamburger{width:40px;height:40px}
@@ -190,17 +176,10 @@
       </div>  
       <nav class="site-nav" aria-label="Main navigation">
         <a class="nav-home" href="index.html" aria-label="Home">Home</a>
-        <span class="nav-separator" aria-hidden="true"></span>
-        <button class="hamburger" aria-expanded="false" aria-controls="main-menu" aria-label="Open navigation menu">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </button>
-
-        <div id="main-menu" class="menu-panel" role="menu" aria-hidden="true">
-          <a role="menuitem" href="index.html#about">About</a>
-          <a role="menuitem" href="index.html#skills">Skills</a>
-          <a role="menuitem" href="resume.html">Resume</a>
-          <a role="menuitem" href="contact.html">Contact</a>
-        </div>
+        <a href="index.html#about">About</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="resume.html">Resume</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </div>
   </header>
@@ -447,30 +426,6 @@
         if(window.innerWidth <= 600){ btn.style.right = '16px'; btn.style.bottom = '16px'; }
         else { btn.style.right = '24px'; btn.style.bottom = '24px'; }
       }, {passive:true});
-    })();
-
-    // Hamburger menu behavior: toggle panel, close on outside click/Escape, close after selection
-    (function(){
-      var btn = document.querySelector('.hamburger');
-      var menu = document.getElementById('main-menu');
-      if(!btn || !menu) return;
-
-      function setOpen(open){
-        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-        menu.setAttribute('aria-hidden', open ? 'false' : 'true');
-        document.documentElement.classList.toggle('header-open', open);
-      }
-
-      btn.addEventListener('click', function(e){ e.stopPropagation(); var isOpen = btn.getAttribute('aria-expanded') === 'true'; setOpen(!isOpen); if(!isOpen){ var first = menu.querySelector('a'); if(first) first.focus(); }});
-
-      // Close menu when clicking outside
-      document.addEventListener('click', function(e){ if(!menu.contains(e.target) && !btn.contains(e.target)){ setOpen(false); }});
-
-      // Close on Escape
-      window.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ setOpen(false); btn.focus(); }});
-
-      // Close when a menu link is clicked (allow anchor behavior to proceed)
-      menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); });
     })();
 
     // Smooth scroll for in-page anchors (delegated)
