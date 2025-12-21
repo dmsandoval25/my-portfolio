@@ -51,16 +51,10 @@
       <div class="brand"><a href="index.html" class="brand-link" aria-label="Dominic Sandoval — Home" title="Home">Dominic Sandoval</a></div>
       <nav class="site-nav" aria-label="Main navigation">
         <a class="nav-home" href="index.html" aria-label="Home">Home</a>
-        <button class="hamburger" aria-expanded="false" aria-controls="main-menu" aria-label="Open navigation menu">
-          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
-        </button>
-
-        <div id="main-menu" class="menu-panel" role="menu" aria-hidden="true">
-          <a role="menuitem" href="index.html#about">About</a>
-          <a role="menuitem" href="index.html#skills">Skills</a>
-          <a role="menuitem" href="resume.html">Resume</a>
-          <a role="menuitem" href="contact.html">Contact</a>
-        </div>
+        <a href="index.html#about">About</a>
+        <a href="index.html#skills">Skills</a>
+        <a href="index.html#resume">Resume</a>
+        <a href="contact.html">Contact</a>
       </nav>
     </div>
   </header>
@@ -88,8 +82,6 @@
     tryLoad('images/chicago-skyline-night.webp', function(ok){ if(ok){ document.body.classList.remove('bg-fallback'); document.body.dataset.bg='webp'; return; } tryLoad('images/chicago-skyline-night.jpg', function(ok2){ if(ok2){ document.body.classList.remove('bg-fallback'); document.body.dataset.bg='jpg'; return; } document.body.classList.add('bg-fallback'); console.warn('Background image failed to load; using gradient fallback.'); }); });
 
     (function(){ var btn = document.querySelector('.floating-arrow'); if(!btn) return; btn.style.left = 'auto'; btn.style.top = 'auto'; btn.style.right = '24px'; btn.style.bottom = '24px'; btn.style.display = 'flex'; btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); }); btn.addEventListener('keydown', function(e){ if(e.key === 'Enter' || e.key === ' ' ) { e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'}); } }); function updateOpacity(){ if(window.scrollY < 60){ btn.style.opacity = '0.35'; } else { btn.style.opacity = '0.6'; } } window.addEventListener('scroll', updateOpacity, {passive:true}); updateOpacity(); document.addEventListener('focusin', function(e){ if(['INPUT','TEXTAREA','SELECT'].indexOf((e.target && e.target.tagName)||'') !== -1){ btn.style.opacity = '0.15'; } }); document.addEventListener('focusout', updateOpacity); window.addEventListener('resize', function(){ if(window.innerWidth <= 600){ btn.style.right = '16px'; btn.style.bottom = '16px'; } else { btn.style.right = '24px'; btn.style.bottom = '24px'; } }, {passive:true}); })();
-
-    (function(){ var btn = document.querySelector('.hamburger'); var menu = document.getElementById('main-menu'); if(!btn || !menu) return; function setOpen(open){ btn.setAttribute('aria-expanded', open ? 'true' : 'false'); menu.setAttribute('aria-hidden', open ? 'false' : 'true'); document.documentElement.classList.toggle('header-open', open); } btn.addEventListener('click', function(e){ e.stopPropagation(); var isOpen = btn.getAttribute('aria-expanded') === 'true'; setOpen(!isOpen); if(!isOpen){ var first = menu.querySelector('a'); if(first) first.focus(); }}); document.addEventListener('click', function(e){ if(!menu.contains(e.target) && !btn.contains(e.target)){ setOpen(false); }}); window.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ setOpen(false); btn.focus(); }}); menu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', function(){ setOpen(false); }); }); })();
 
     (function(){ document.addEventListener('click', function(e){ var a = e.target.closest && e.target.closest('a'); if(!a) return; var href = a.getAttribute('href'); if(!href || href.charAt(0) !== '#') return; var id = href.slice(1); var target = id ? document.getElementById(id) : document.documentElement; if(!target) return; e.preventDefault(); target.scrollIntoView({behavior:'smooth', block:'start'}); try{ history.pushState(null,'', href); }catch(_e){} if(!target.hasAttribute('tabindex')) target.setAttribute('tabindex','-1'); try{ target.focus({preventScroll:true}); }catch(_e){} }, {passive:false}); if(window.location.hash){ var t = document.getElementById(window.location.hash.slice(1)); if(t){ setTimeout(function(){ t.scrollIntoView({behavior:'smooth', block:'start'}); if(!t.hasAttribute('tabindex')) t.setAttribute('tabindex','-1'); try{ t.focus({preventScroll:true}); }catch(_e){} }, 60); } } })();
 
