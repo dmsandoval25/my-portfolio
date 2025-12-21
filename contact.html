@@ -23,7 +23,12 @@
     .site-nav{display:flex;align-items:center;gap:.4rem;white-space:nowrap}
     .site-nav .menu-panel{right:16px} 
     .brand-link:focus{outline:2px solid rgba(0,102,255,0.12);outline-offset:3px;border-radius:6px}
-    nav a{margin-left:1rem;color:#0b1220;text-decoration:none}
+    nav a, .site-nav .nav-home {
+      margin-left:1rem;
+      color:#0b1220;
+      text-decoration:none;
+      font-weight:700;
+    }
     .site-nav .nav-home{display:inline-block;margin-right:.5rem;color:#0b1220;background:transparent;padding:0 .35rem;border-radius:6px;text-decoration:none;font-weight:700}
     .site-nav .nav-home:hover,.site-nav .nav-home:focus{background:rgba(11,18,32,0.03)}
     .site-nav .nav-separator{display:inline-block;width:1px;height:20px;background:rgba(11,18,32,0.06);margin:0 .6rem;vertical-align:middle;border-radius:1px}
