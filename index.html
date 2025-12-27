@@ -302,4 +302,51 @@
       <a href="mailto:dmsandoval25@gmail.com">dmsandoval25@gmail.com</a>
     </p>
 
-    <p><strong>LinkedIn:</strong>
+    <p><strong>LinkedIn:</strong> 
+      <a href="https://www.linkedin.com/in/dominic-sandoval-48a177342" target="_blank">
+        linkedin.com/in/dominic-sandoval
+      </a>
+    </p>
+
+    <p><strong>GitHub:</strong> 
+      <a href="https://github.com/dmsandoval25" target="_blank">
+        github.com/dmsandoval25
+      </a>
+    </p>
+
+    <p><strong>Resume:</strong> 
+      <a href="Dominic-Sandoval-Resume.pdf" target="_blank">Download PDF</a>
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  © 2025 Dominic Sandoval
+</footer>
+
+<!-- FLOATING ARROW -->
+<button class="floating-arrow" aria-label="Scroll to top" title="Back to top" tabindex="0">
+  <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M12 4l-8 8h5v8h6v-8h5z"/>
+  </svg>
+</button>
+
+<!-- ARROW SCRIPT -->
+<script>
+  const btn = document.querySelector('.floating-arrow');
+
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  function updateOpacity() {
+    btn.style.opacity = window.scrollY < 60 ? '0.35' : '0.7';
+  }
+
+  window.addEventListener('scroll', updateOpacity);
+  updateOpacity();
+</script>
+
+</body>
+</html>
